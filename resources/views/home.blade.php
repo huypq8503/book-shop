@@ -1,31 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-
+<div class="container">
     <div class="row justify-content-center">
-        @foreach ($books as $book)
-           
-            <div class="item">
-                <div class="card mx-3 my-3 book_card" style="width: 13rem;">
-                    <img class="card-img-top" src="{{asset('images/'.$book->book_image)}}" alt="Card image cap"
-                        width="100px" height="250px">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong><a href="#">{{$book->book_name}}</a></strong></h5>
-                        <p class="card-text">{{$book->book_auther}}</p>
-                        <h2 class="card-text">{{"$".$book->book_price}}</h2>
-                        {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-                    </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Dashboard') }}</div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    {{ __('You are logged in!') }}
                 </div>
-    
             </div>
-            
-        @endforeach
-        
-
+        </div>
     </div>
-
-</div>
 </div>
 @endsection

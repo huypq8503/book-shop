@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,56 +8,55 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- <title>{{ config('app.name', 'laravel') }}</title> --}}
-    <title>@yield('title')</title>
+    <title> @yield('title') </title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <meta name="description" content="@yield('meta_description')">
+    <meta name="" content="@yield('meta_keyword')">
+    <meta name="" content="ecommerce">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="{{asset('footer/style.css')}}" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
-    <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js') }}" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link href="{{ asset('assets/css/owl.carousel.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/owl.theme.default.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/xzoom/jquery.exzoom.css') }}">
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+   
+
+
+    @livewireStyles
 </head>
+
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md shadow-sm">
+        @include('layouts.include.frontend.navbar')
+        {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{-- {{ config('app.name', 'Laravel') }} --}}
-                    {{"Books Spot"}}
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                    @guest
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url('/home')}}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url('/books')}}">Books</a>
-                    </li>
-                    {{-- <form class="form-inline d-flex text-center">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-                      </form> --}}
-                      @endguest
-                </ul>
-                   
+                    <ul class="navbar-nav me-auto">
+
+                    </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -71,16 +71,12 @@
                                 </li>
                             @endif
                         @else
-
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" 
-                            href="{{url("/profile/".Auth::user()->email)}}">Profile</a>
-
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -91,51 +87,39 @@
                                         @csrf
                                     </form>
                                 </div>
-
                             </li>
                         @endguest
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
 
         <main class="py-4">
             @yield('content')
         </main>
+    </div>
+    @include('layouts.include.frontend.footer')
 
-        <div class="mt-5 pt-5 pb-5 footer">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-5 col-xs-12 about-company">
-                  <h2>Heading</h2>
-                  <p class="pr-5 text-white-50">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac ante mollis quam tristique convallis </p>
-                  <p><a href="#"><i class="fa fa-facebook-square mr-1"></i></a><a href="#"><i class="fa fa-linkedin-square"></i></a></p>
-                </div>
-                <div class="col-lg-3 col-xs-12 links">
-                  <h4 class="mt-lg-0 mt-sm-3">Links</h4>
-                    <ul class="m-0 p-0">
-                      <li>- <a href="#">Lorem ipsum</a></li>
-                      <li>- <a href="#">Nam mauris velit</a></li>
-                      <li>- <a href="#">Etiam vitae mauris</a></li>
-                      <li>- <a href="#">Fusce scelerisque</a></li>
-                      <li>- <a href="#">Sed faucibus</a></li>
-                      <li>- <a href="#">Mauris efficitur nulla</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4 col-xs-12 location">
-                  <h4 class="mt-lg-0 mt-sm-4">Location</h4>
-                  <p>22, Lorem ipsum dolor, consectetur adipiscing</p>
-                  <p class="mb-0"><i class="fa fa-phone mr-3"></i>(541) 754-3010</p>
-                  <p><i class="fa fa-envelope-o mr-3"></i>info@hsdf.com</p>
-                </div>
-              </div>
-              <div class="row mt-5">
-                <div class="col copyright">
-                  <p class=""><small class="text-white-50">© 2019. All Rights Reserved.</small></p>
-                </div>
-              </div>
-            </div>
-            </div>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    {{-- <script src="{{ asset('assets/js/bootstrap.min.js') }}" defer></script> --}}
+    <script src="{{ asset('assets/xzoom/jquery.exzoom.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
+    <script>
+        window.addEventListener('message', event => {
+            if (event.detail) {
+                alertify.set('notifier', 'position', 'top-right');
+                alertify.notify(event.detail.text);
+            }
+
+        });
+    </script>
+    <script defer src="{{ asset('assets/js/owl.carousel.min.js') }}" ></script>
+    @yield('script')
+    @livewireScripts
+    @stack('scripts')
 </body>
+
 </html>
